@@ -33,12 +33,32 @@
 		//Wrap words into span's
 		var blockPartsWithSpanSpaces = '<span>' + blockParts.join('</span> <span>') + '</span>';
 
-
+		//Paste string in container
 		multilines.innerHTML = blockPartsWithSpanSpaces;
 
-		console.log(blockPartsWithSpanSpaces);
+		//Get span elements
+		var spans = multilines.getElementsByTagName('span');
+
+		//Variables declaration
+		var lines = [],
+			line = [],
+			oldTop = null;
+
+		//Get topOffset
+		for (var i = 0; i < spans.length - 1; i++) {
+
+			if( spans[i].offsetTop !== oldTop && oldTop != null ) {
+				
+				lines.push( line );
+				line = [];
+			}
+
+			oldTop = spans[i].offsetTop;
+			line.push(spans[i]);
+		};
 
 
+			console.log(lines);
 		
 
 	</script>
