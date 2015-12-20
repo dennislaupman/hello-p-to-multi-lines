@@ -10,6 +10,15 @@
 	#multilines {
 
 		width: 600px;
+		font-family: verdana;
+		font-size: 14px;
+		line-height: 20px;
+	}
+
+	#multilines div {
+
+		background: #ddd;
+		border-bottom: 2px solid #fff;
 	}
 
 	</style>
@@ -44,40 +53,30 @@
 			line = [],
 			oldTop = null;
 
-		//Get topOffset
-		for (var i = 0; i < spans.length; i++) {
 
-
-			if( spans[i].offsetTop !== oldTop && oldTop != null ) {
-				
-				lines.push( line );
-				line = [];
-			}
-
-			oldTop = spans[i].offsetTop;
-			line.push(spans[i]);
-		};
-
-		var lineStr = '';
-
-		//
-		for (var i = 0; i < lines.length; i++) {
-
-			lineStr += '<div>';
+		var lineStr = '',
 			wordStr = '';
 
-			for (var ii = 0; ii < lines[i].length; ii++) {
+		//Create Lines
+		for (var i = 0; i < spans.length+1; i++) {
 
-				wordStr += ' '+lines[i][ii].innerHTML;
+			if( !spans[i] || ( spans[i].offsetTop !== oldTop && oldTop != null )) {
+
+				lineStr += '<div>'+wordStr+'</div>';
+				wordStr = '';
+
+				if(!spans[i]) {
+
+					break;
+				}
 			}
 
+			wordStr += ' '+spans[i].innerHTML;
 
-			lineStr += wordStr+'</div>';
-			
-//console.log(lines[i]);
+			oldTop = spans[i].offsetTop;
 		};
 
-
+		//Paste in container
 		multilines.innerHTML = lineStr;
 
 	</script>
